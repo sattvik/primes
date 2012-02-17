@@ -1,10 +1,12 @@
 (ns primes.core
-  (:require [primes.java.bitset :as java-bitset]))
+  (:require [primes.java.bitset :as java-bitset]
+            [primes.clojure.lazy-seq :as clj-lazy]))
 
-(def ranges [10000000])
+(def ranges [100000])
 
 (def all-generators
-  {:java-bitset java-bitset/get-primes
+  {:java-bitset  java-bitset/get-primes
+   :clojure-lazy clj-lazy/get-primes
    })
 
 (defn handle-bad-args [bad-args]

@@ -1,4 +1,4 @@
-(ns primes.clojure.simple-seq
+(ns primes.clojure.lazy-seq
   "Generates primes using an infinite, lazy sieve.")
 
 (defn divides? [n d]
@@ -15,12 +15,16 @@
   (first (remove #(has-prime-factor? % known-primes) (iterate inc n))))
 
 (def prime-seq
-  "A lazy, infinite sequence of prime numbers."
   ((fn next [n primes]
     (cons n (lazy-seq (next (next-prime (inc n) primes) (conj primes n)))))
     2 []))
 
-(defn primes-up-to
+(deftype LazySeqPrimes [prime-set]
+  primes.Primes
+  (isPrime [this n]
+    (contains? prime-set n)))
+
+(defn get-primes
   "Returns a list of all the prime numbers less than n"
   [n]
-  (take-while #(< % n) prime-seq))
+  (LazySeqPrimes. (apply hash-set (take-while #(< % n) prime-seq))))
