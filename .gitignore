@@ -1,0 +1,11 @@
+/.history
+/.lein-failures
+/.lein-deps-sum
+/.lein-plugins
+/checkouts
+/classes
+/lib
+/multi-lib
+/native
+/pom.xml
+*jar
