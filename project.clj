@@ -1,5 +1,5 @@
-(defproject primes "1.0.0-SNAPSHOT"
-  :description "FIXME: write description"
+(defproject primes "0.1.0-SNAPSHOT"
+  :description "Code for the ‘Crunching numbers in Clojure’ presentation for Clojure/West"
   :main primes.core
   :source-path "src/clojure"
   :java-source-path "src/java"
