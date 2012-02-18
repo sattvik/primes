@@ -1,6 +1,7 @@
 (ns primes.tests
   (:require [primes.java.bitset :as bitset]
             [primes.clojure.lazy-seq :as clj-lazy]
+            [primes.clojure.hinted-seq :as clj-hinted]
             )
   (:use clojure.test))
 
@@ -15,6 +16,7 @@
 
 (defprimetest java-bitset  bitset/get-primes)
 (defprimetest clojure-lazy clj-lazy/get-primes)
+(defprimetest clojure-hinted clj-hinted/get-primes)
 
 
 (def thousand-primes
