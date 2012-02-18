@@ -5,6 +5,7 @@
 
 (def algorithms
   {:java-bitset      'primes.java.bitset
+   :java-lazy        'primes.java.lazy
    :clojure-lazy     'primes.clojure.lazy-seq
    :clojure-hinted   'primes.clojure.hinted-seq})
 
