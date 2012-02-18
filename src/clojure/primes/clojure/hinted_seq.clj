@@ -1,17 +1,20 @@
 (ns primes.clojure.hinted-seq
   "Generates primes using an infinite, lazy sieve.")
 
-(defn divides? [^long n ^long d]
+(defn divides?
   "Returns true if n is divisible by d."
+  [^long n ^long d]
   (zero? (rem n d)))
 
-(defn has-prime-factor? [^long n primes]
+(defn has-prime-factor?
   "Returns true if n has a factor in primes."
+  [^long n primes]
   (some #(divides? n %) primes))
 
-(defn next-prime [^long n known-primes]
+(defn next-prime
   "Given n and a list of prime factors, return the smallest number greater than
   or equal to n that is relatively prime to all of the numbers in known-primes."
+  [^long n known-primes]
   (first (remove #(has-prime-factor? % known-primes) (iterate inc n))))
 
 (def prime-seq
