@@ -69,10 +69,23 @@
 (defn analyse [data]
   (println)
   (doseq [[algorithm times] data]
-    (println (apply str (name algorithm) \, (interpose \, times)))
+    (println (name algorithm))
     (let [[mean sd] (compute-stats times)]
       (println "  mean:" mean)
       (println "    sd:" sd))))
+
+(defn write-stats [data samples n]
+  (doseq [[algorithm times] data]
+    (let [algo-name  (name algorithm)
+          file       (str "stats-" algo-name \- samples \- n ".clj")
+          [mean sd]  (compute-stats times)
+          out-map    {:algorithm algo-name
+                      :n         n
+                      :samples   samples
+                      :times     (apply vector times)
+                      :mean      mean
+                      :sd        sd}]
+      (spit file (pr-str out-map)))))
 
 (defn -main [samples n & args]
   (let [samples (to-num samples default-samples)
@@ -80,4 +93,6 @@
         algos   (or (seq (map keyword args)) (keys algorithms))]
     (if-let [invalid-algos (seq (remove #(contains? algorithms %) algos))]
       (handle-bad-args (map name invalid-algos))
-      (analyse (benchmark-all samples n algos)))))
+      (let [data (benchmark-all samples n algos)]
+        (analyse data)
+        (write-stats data samples n)))))
