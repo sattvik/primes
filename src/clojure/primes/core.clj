@@ -1,5 +1,6 @@
 (ns primes.core)
 
+(def warmup-cycles 5)
 (def default-samples 5)
 (def default-n 100000)
 
@@ -39,23 +40,24 @@
     (ns-resolve ns-sym 'get-primes)))
 
 (defn benchmark [samples max algorithm]
-  (print (str (name algorithm) \,))
+  (print (name algorithm))
   (flush)
-  (let [times (doall
-                (for [i (range samples)]
+  (let [runs  (+ warmup-cycles samples)
+        times (doall
+                (for [i (range runs)]
                   (let [algo-fn (reload-algo-function algorithm)
                         time    (time-invoke #(algo-fn max))]
-                    (if (= i (dec samples))
-                      (println time)
-                      (print (str time \,)))
+	            (cond
+		      (< i warmup-cycles) (print \,)
+		      (= i (dec runs)) (println "done!")
+		      :else      (print \.))
                     (flush)
                     time)))]
-    (let [[avg sd] (compute-stats times)]
-      (println "  average:" avg)
-      (println "  std dev:" sd))))
+    (drop warmup-cycles times)))
 
 (defn benchmark-all [samples n algorithms]
-  (dorun (map #(benchmark samples n %) algorithms)))
+  (zipmap algorithms
+          (map #(benchmark samples n %) algorithms)))
 
 (defn to-num [n default-value]
   (cond
@@ -63,10 +65,18 @@
     (string? n) (Long/parseLong n)
     :default default-value))
 
+(defn analyse [data]
+  (println)
+  (doseq [[algorithm times] data]
+    (println (apply str (name algorithm) \, (interpose \, times)))
+    (let [[mean sd] (compute-stats times)]
+      (println "  mean:" mean)
+      (println "    sd:" sd))))
+
 (defn -main [samples n & args]
   (let [samples (to-num samples default-samples)
         n       (to-num n default-n)
         algos   (or (seq (map keyword args)) (keys algorithms))]
     (if-let [invalid-algos (seq (remove #(contains? algorithms %) algos))]
       (handle-bad-args (map name invalid-algos))
-      (benchmark-all samples n algos))))
+      (analyse (benchmark-all samples n algos)))))
