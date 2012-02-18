@@ -18,8 +18,11 @@
   (first (remove #(has-prime-factor? % known-primes) (iterate inc n))))
 
 (def prime-seq
-  ((fn next [n primes]
-    (cons n (lazy-seq (next (next-prime (inc n) primes) (conj primes n)))))
+  ((fn next [p primes]
+    (lazy-seq
+      (cons p
+            (next (next-prime (inc p) primes)
+                  (conj primes p)))))
     2 []))
 
 (deftype LazySeqPrimes [prime-set]
