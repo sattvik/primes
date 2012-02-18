@@ -1,6 +1,6 @@
 (ns primes.tests
   (:require [primes.java.bitset :as bitset]
-            [primes.clojure.lazy-seq :as clj-lazy]
+            [primes.clojure.lazy-seq.type :as clj-lazy]
             [primes.clojure.hinted-seq :as clj-hinted]
             )
   (:use clojure.test))

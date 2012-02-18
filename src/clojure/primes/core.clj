@@ -4,9 +4,9 @@
 (def default-n 100000)
 
 (def algorithms
-  {:java-bitset    'primes.java.bitset
-   :clojure-lazy   'primes.clojure.lazy-seq
-   :clojure-hinted 'primes.clojure.hinted-seq})
+  {:java-bitset      'primes.java.bitset
+   :clojure-lazy     'primes.clojure.lazy-seq
+   :clojure-hinted   'primes.clojure.hinted-seq})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."

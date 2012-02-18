@@ -19,18 +19,12 @@
 
 (def prime-seq
   ((fn next [p primes]
-    (lazy-seq
-      (cons p
-            (next (next-prime (inc p) primes)
-                  (conj primes p)))))
+     (lazy-seq
+       (cons p
+         (next (next-prime (inc p) primes)
+           (conj primes p)))))
     2 []))
 
-(deftype LazySeqPrimes [prime-set]
-  primes.Primes
-  (isPrime [this n]
-    (contains? prime-set n)))
-
-(defn get-primes
-  "Returns a Primes for all primes less than n."
-  [n]
-  (LazySeqPrimes. (apply hash-set (take-while #(< % n) prime-seq))))
+(defn get-primes [n]
+  "Returns a sequence of all primes less than n."
+  (doall (take-while #(< % n) prime-seq)))
