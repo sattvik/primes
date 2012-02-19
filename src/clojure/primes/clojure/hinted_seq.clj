@@ -15,7 +15,9 @@
   "Given n and a list of prime factors, return the smallest number greater than
   or equal to n that is relatively prime to all of the numbers in known-primes."
   [^long n known-primes]
-  (first (remove #(has-prime-factor? % known-primes) (iterate inc n))))
+  (if (has-prime-factor? n known-primes)
+    (recur (inc n) known-primes)
+    n))
 
 (def prime-seq
   ((fn next [^long n primes]
