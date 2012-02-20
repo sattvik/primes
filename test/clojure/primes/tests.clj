@@ -1,6 +1,7 @@
 (ns primes.tests
   (:require [primes.java.bitset :as bitset]
             [primes.java.lazy :as java-lazy]
+            [primes.clojure.array-seq :as clj-array]
             [primes.clojure.lazy-seq.type :as clj-lazy]
             [primes.clojure.hinted-seq :as clj-hinted]
             [primes.clojure.loop-has-prime-factor :as clj-loop-hpf]
@@ -21,6 +22,7 @@
 (defprimetest clojure-lazy clj-lazy/get-primes)
 (defprimetest clojure-hinted clj-hinted/get-primes)
 (defprimetest clojure-loop-hpf clj-loop-hpf/get-primes)
+(defprimetest clojure-array clj-array/get-primes)
 
 
 (def thousand-primes
