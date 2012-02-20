@@ -1,5 +1,6 @@
 (ns primes.clojure.hinted-seq
-  "Generates primes using an infinite, lazy sieve.")
+  "Generates primes using an infinite, lazy sieve.  This version uses primitive
+  hints to make the numeric operations more streamlined.")
 
 (defn divides?
   "Returns true if n is divisible by d."
