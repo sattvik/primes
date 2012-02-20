@@ -5,12 +5,12 @@
 (def default-n 100000)
 
 (def algorithms
-  {:java-bitset      'primes.java.bitset
-   :java-lazy        'primes.java.lazy
-   :clojure-array    'primes.clojure.array-seq
-   :clojure-lazy     'primes.clojure.lazy-seq
-   :clojure-hinted   'primes.clojure.hinted-seq
-   :clojure-loop-hpf 'primes.clojure.loop-has-prime-factor})
+  {:java-bitset           'primes.java.bitset
+   :java-lazy             'primes.java.lazy
+   :clojure-array         'primes.clojure.array-seq
+   :clojure-lazy          'primes.clojure.lazy-seq
+   :clojure-hinted        'primes.clojure.hinted-seq
+   :clojure-exploit-types 'primes.clojure.exploit-types})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."
