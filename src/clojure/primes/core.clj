@@ -1,6 +1,6 @@
 (ns primes.core)
 
-(def warmup-cycles 5)
+(def default-warmup-cycles 5)
 (def default-samples 5)
 (def default-n 100000)
 
@@ -42,7 +42,7 @@
     (require :reload ns-sym)
     (ns-resolve ns-sym 'get-primes)))
 
-(defn benchmark [samples max algorithm]
+(defn benchmark [warmup-cycles samples max algorithm]
   (print (name algorithm))
   (flush)
   (let [runs  (+ warmup-cycles samples)
@@ -58,9 +58,9 @@
                     time)))]
     (drop warmup-cycles times)))
 
-(defn benchmark-all [samples n algorithms]
+(defn benchmark-all [warmup-cycles samples n algorithms]
   (zipmap algorithms
-          (map #(benchmark samples n %) algorithms)))
+          (map #(benchmark warmup-cycles samples n %) algorithms)))
 
 (defn to-num [n default-value]
   (cond
@@ -89,12 +89,13 @@
                       :sd        sd}]
       (spit file (pr-str out-map)))))
 
-(defn -main [samples n & args]
-  (let [samples (to-num samples default-samples)
+(defn -main [warmup-cycles samples n & args]
+  (let [warmup-cycles (to-num warmup-cycles default-warmup-cycles)
+        samples (to-num samples default-samples)
         n       (to-num n default-n)
         algos   (or (seq (map keyword args)) (keys algorithms))]
     (if-let [invalid-algos (seq (remove #(contains? algorithms %) algos))]
       (handle-bad-args (map name invalid-algos))
-      (let [data (benchmark-all samples n algos)]
+      (let [data (benchmark-all warmup-cycles samples n algos)]
         (analyse data)
         (write-stats data samples n)))))
