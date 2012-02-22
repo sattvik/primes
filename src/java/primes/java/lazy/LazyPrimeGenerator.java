@@ -8,7 +8,11 @@ public class LazyPrimeGenerator {
     }
 
     static boolean hasPrimeFactor(long n, List<Long> primes) {
+        double limit = Math.sqrt(n);
         for (long p : primes) {
+	    if (p > limit) {
+	        return false;
+	    }
             if (divides(n, p)) {
                 return true;
             }
@@ -18,9 +22,9 @@ public class LazyPrimeGenerator {
 
     static long nextPrime(long n, List<Long> primes) {
         for (;;++n) {
-           if (!hasPrimeFactor(n, primes)) {
-               return n;
-           }
+            if (!hasPrimeFactor(n, primes)) {
+                return n;
+            }
         }
     }
 

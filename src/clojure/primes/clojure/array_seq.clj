@@ -9,12 +9,16 @@
 (defn has-prime-factor?
   "Returns true if n has a factor in primes."
   [^long n ^longs primes]
-  (let [count (aget primes 0)]
+  (let [count (aget primes 0)
+        limit (long (Math/sqrt n))]
     (loop [i 1]
-      (cond 
-        (= i count) false
-        (divides? n (aget primes i)) true
-        :els (recur (inc i))))))
+      (if (= i count)
+        false
+        (let [p (aget primes i)]
+          (cond
+            (> p limit) false
+            (divides? n p) true
+            :else (recur (inc i))))))))
 
 (defn next-prime
   "Given n and a list of prime factors, return the smallest number greater than

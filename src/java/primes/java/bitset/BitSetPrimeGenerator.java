@@ -24,13 +24,9 @@ public class BitSetPrimeGenerator {
 
             // find the primes
             int sqrtn = (int) Math.floor(Math.sqrt(n));
-            for (int i = 2; i <= sqrtn; ++i) {
-                // if i isn't a prime, move on
-                if (sieve.get(i)) {
-                    continue;
-                }
+            for (int i = 2; i <= sqrtn; i = sieve.nextClearBit(++i)) {
                 // mark all the multiples of i as primes
-                for (int j = i + i; j < n; j += i) {
+                for (int j = i * i; j < n; j += i) {
                     sieve.set(j);
                 }
             }

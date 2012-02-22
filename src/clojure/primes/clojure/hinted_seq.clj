@@ -10,7 +10,7 @@
 (defn has-prime-factor?
   "Returns true if n has a factor in primes."
   [^long n primes]
-  (some #(divides? n %) primes))
+  (some #(divides? n %) (take-while #(<= % (Math/sqrt n)) primes)))
 
 (defn next-prime
   "Given n and a list of prime factors, return the smallest number greater than
