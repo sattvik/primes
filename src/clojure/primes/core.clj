@@ -8,7 +8,8 @@
   {:java-lazy-basic       'primes.java.lazy-basic
    :clojure-lazy-basic    'primes.clojure.lazy-basic
    :clojure-lazy-hinted   'primes.clojure.lazy-hinted
-   :java-lazy-smarter     'primes.java.lazy-smarter})
+   :java-lazy-smarter     'primes.java.lazy-smarter
+   :clojure-lazy-smarter  'primes.clojure.lazy-smarter})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."
