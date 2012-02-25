@@ -23,12 +23,12 @@
 
 (def prime-seq
   "A lazy sequence of prime numbers."
-  ((fn next [^long p primes]
+  ((fn inner [^long p primes]
      (lazy-seq
        (cons p
-         (next (next-prime (inc p) primes)
-           (conj primes p)))))
-    2 []))
+             (inner (next-prime (inc p) primes)
+                    (conj primes p)))))
+     2 []))
 
 (defn get-primes
   "Gets all of the primes less than n."
