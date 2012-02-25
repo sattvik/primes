@@ -15,7 +15,8 @@
    :clojure-lazy-array           'primes.clojure.lazy-array
    :clojure-lazy-array-unchecked 'primes.clojure.lazy-array-unchecked
    :java-eager-bitset            'primes.java.eager-bitset
-   :clojure-eager-bitset         'primes.clojure.eager-bitset})
+   :clojure-eager-bitset         'primes.clojure.eager-bitset
+   :clojure-eager-array          'primes.clojure.eager-array})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."
