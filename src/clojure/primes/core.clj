@@ -11,7 +11,8 @@
    :java-lazy-smarter       'primes.java.lazy-smarter
    :clojure-lazy-smarter    'primes.clojure.lazy-smarter
    :clojure-lazy-sminted    'primes.clojure.lazy-sminted
-   :clojure-lazy-exploitive 'primes.clojure.lazy-exploitive})
+   :clojure-lazy-exploitive 'primes.clojure.lazy-exploitive
+   :clojure-lazy-array      'primes.clojure.lazy-array})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."

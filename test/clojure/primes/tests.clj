@@ -5,7 +5,8 @@
                             [lazy-hinted     :as clj-hinted]
                             [lazy-smarter    :as clj-smarter]
                             [lazy-sminted    :as clj-sminted]
-                            [lazy-exploitive :as clj-exploitive]])
+                            [lazy-exploitive :as clj-exploitive]
+                            [lazy-array      :as clj-array]])
   (:use clojure.test))
 
 (declare thousand-primes)
@@ -17,7 +18,8 @@
   (is (= thousand-primes (take 1000 java-smarter/prime-seq)))
   (is (= thousand-primes (take 1000 clj-smarter/prime-seq)))
   (is (= thousand-primes (take 1000 clj-sminted/prime-seq)))
-  (is (= thousand-primes (take 1000 clj-exploitive/prime-seq))))
+  (is (= thousand-primes (take 1000 clj-exploitive/prime-seq))
+  (is (= thousand-primes (take 1000 clj-array/prime-seq)))))
 
 (def thousand-primes
     [   2      3      5      7     11     13     17     19     23     29 

@@ -1,5 +1,8 @@
-(ns primes.clojure.array-seq
-  "Generates primes using an infinite, lazy sieve.")
+(ns primes.clojure.lazy-array
+  "Finds primes as an infinite, lazy sequence via trial by division.  This
+  version improves on the exploitive method by using primitive arrays as the
+  underlying data type."
+  (:require [primes.util :as util]))
 
 (defn divides?
   "Returns true if n is divisible by d."
@@ -9,16 +12,16 @@
 (defn has-prime-factor?
   "Returns true if n has a factor in primes."
   [^long n ^longs primes]
-  (let [count (aget primes 0)
-        limit (long (Math/sqrt n))]
+  (let [c     (aget primes 0)
+        sqrtn (long (Math/sqrt n))]
     (loop [i 1]
-      (if (= i count)
+      (if (= i c)
         false
         (let [p (aget primes i)]
           (cond
-            (> p limit) false
+            (> p sqrtn)    false
             (divides? n p) true
-            :else (recur (inc i))))))))
+            :else          (recur (inc i))))))))
 
 (defn next-prime
   "Given n and a list of prime factors, return the smallest number greater than
@@ -29,6 +32,8 @@
     n))
 
 (defn- add-prime
+  "Adds a prime to the array of primes, doubling the size of the vector, if
+  necessary."
   [^longs primes ^long p]
   (let [next-loc (aget primes 0)
         size     (alength primes)]
@@ -44,18 +49,17 @@
         primes))))
 
 (def prime-seq
-  ((fn next [^long n ^longs primes]
-    (cons n (lazy-seq (next (next-prime (inc n) primes) (add-prime primes n)))))
-    2 (let [arr (long-array 2)]
-        (aset arr 0 1)
-        arr)))
-
-(deftype LazySeqPrimes [prime-set]
-  primes.Primes
-  (isPrime [this n]
-    (contains? prime-set n)))
+  "A lazy sequence of prime numbers."
+  ((fn inner [^long p ^longs primes]
+     (lazy-seq
+       (cons p
+             (inner (next-prime (inc p) primes)
+                    (add-prime primes p)))))
+     2 (let [arr (long-array 32)]
+         (aset arr 0 1)
+         arr)))
 
 (defn get-primes
-  "Returns a list of all the prime numbers less than n"
-  [^long n]
-  (LazySeqPrimes. (apply hash-set (take-while #(< % n) prime-seq))))
+  "Gets all of the primes less than n."
+  [n]
+  (util/get-primes prime-seq n))
