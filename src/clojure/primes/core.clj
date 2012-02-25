@@ -6,7 +6,8 @@
 
 (def algorithms
   {:java-lazy-basic       'primes.java.lazy-basic
-   :clojure-lazy-basic    'primes.clojure.lazy-basic})
+   :clojure-lazy-basic    'primes.clojure.lazy-basic
+   :java-lazy-smarter     'primes.java.lazy-smarter})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."

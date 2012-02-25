@@ -1,5 +1,6 @@
 (ns primes.tests
-  (:require [primes.java [lazy-basic :as java-basic]]
+  (:require [primes.java [lazy-basic   :as java-basic]
+                         [lazy-smarter :as java-smarter]]
             [primes.clojure [lazy-basic :as clj-basic]])
   (:use clojure.test))
 
@@ -7,7 +8,8 @@
 
 (deftest primes
   (is (= thousand-primes (take 1000 java-basic/prime-seq)))
-  (is (= thousand-primes (take 1000 clj-basic/prime-seq))))
+  (is (= thousand-primes (take 1000 clj-basic/prime-seq)))
+  (is (= thousand-primes (take 1000 java-smarter/prime-seq))))
 
 (def thousand-primes
     [   2      3      5      7     11     13     17     19     23     29 
