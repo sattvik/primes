@@ -1,6 +1,6 @@
-(ns primes.clojure.hinted-seq
+(ns primes.clojure.lazy-hinted
   "Generates primes using an infinite, lazy sieve.  This version uses primitive
-  hints to make the numeric operations more streamlined.")
+  hints to make the numeric operations faster.")
 
 (defn divides?
   "Returns true if n is divisible by d."
@@ -10,7 +10,7 @@
 (defn has-prime-factor?
   "Returns true if n has a factor in primes."
   [^long n primes]
-  (some #(divides? n %) (take-while #(<= % (Math/sqrt n)) primes)))
+  (some #(divides? n %) primes))
 
 (defn next-prime
   "Given n and a list of prime factors, return the smallest number greater than
