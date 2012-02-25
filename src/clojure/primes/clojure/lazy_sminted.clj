@@ -1,7 +1,8 @@
 (ns primes.clojure.lazy-sminted
   "Finds primes in an infinite, lazy sequence via trial by division.  This
-  implementation improves on the basic lazy prime finder by limiting the amout
-  of trial divsion.  It also make use of primitive hints."
+  implementation improves on the basic lazy prime finder by limiting the amount
+  of trial division and skipping even numbers.  It also make use of primitive
+  hints."
   (:require [primes.util :as util]))
 
 (defn divides?

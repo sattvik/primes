@@ -1,7 +1,7 @@
 (ns primes.clojure.lazy-smarter
   "Finds primes in an infinite, lazy sequence via trial by division.  This
-  implementation improves on the basic lazy prime finder by limiting the amout
-  of trial divsion."
+  implementation improves on the basic lazy prime finder by limiting the amount
+  of trial divsion and skipping even numbers."
   (:require [primes.util :as util]))
 
 (defn divides?
