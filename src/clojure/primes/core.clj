@@ -5,14 +5,15 @@
 (def default-n 100000)
 
 (def algorithms
-  {:java-lazy-basic         'primes.java.lazy-basic
-   :clojure-lazy-basic      'primes.clojure.lazy-basic
-   :clojure-lazy-hinted     'primes.clojure.lazy-hinted
-   :java-lazy-smarter       'primes.java.lazy-smarter
-   :clojure-lazy-smarter    'primes.clojure.lazy-smarter
-   :clojure-lazy-sminted    'primes.clojure.lazy-sminted
-   :clojure-lazy-exploitive 'primes.clojure.lazy-exploitive
-   :clojure-lazy-array      'primes.clojure.lazy-array})
+  {:java-lazy-basic              'primes.java.lazy-basic
+   :clojure-lazy-basic           'primes.clojure.lazy-basic
+   :clojure-lazy-hinted          'primes.clojure.lazy-hinted
+   :java-lazy-smarter            'primes.java.lazy-smarter
+   :clojure-lazy-smarter         'primes.clojure.lazy-smarter
+   :clojure-lazy-sminted         'primes.clojure.lazy-sminted
+   :clojure-lazy-exploitive      'primes.clojure.lazy-exploitive
+   :clojure-lazy-array           'primes.clojure.lazy-array
+   :clojure-lazy-array-unchecked 'primes.clojure.lazy-array-unchecked})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."
