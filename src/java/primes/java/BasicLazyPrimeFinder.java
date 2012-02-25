@@ -1,7 +1,6 @@
 package primes.java;
 
 import java.util.*;
-import primes.Primes;
 
 public class BasicLazyPrimeFinder {
     static boolean divides(long n, long d) {

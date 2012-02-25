@@ -1,6 +1,7 @@
 (ns primes.tests
   (:require [primes.java [lazy-basic   :as java-basic]
-                         [lazy-smarter :as java-smarter]]
+                         [lazy-smarter :as java-smarter]
+                         [eager-bitset :as java-bitset]]
             [primes.clojure [lazy-basic           :as clj-basic]
                             [lazy-hinted          :as clj-hinted]
                             [lazy-smarter         :as clj-smarter]
@@ -8,7 +9,8 @@
                             [lazy-exploitive      :as clj-exploitive]
                             [lazy-array           :as clj-array]
                             [lazy-array-unchecked :as clj-unchecked]])
-  (:use clojure.test))
+  (:use clojure.test
+        primes.util))
 
 (declare thousand-primes)
 
@@ -21,7 +23,8 @@
   (is (= thousand-primes (take 1000 clj-sminted/prime-seq)))
   (is (= thousand-primes (take 1000 clj-exploitive/prime-seq)))
   (is (= thousand-primes (take 1000 clj-array/prime-seq)))
-  (is (= thousand-primes (take 1000 clj-unchecked/prime-seq))))
+  (is (= thousand-primes (take 1000 clj-unchecked/prime-seq)))
+  (is (= thousand-primes (take 1000 (bitset->vector (java-bitset/get-primes 7920))))))
 
 (def thousand-primes
     [   2      3      5      7     11     13     17     19     23     29 
