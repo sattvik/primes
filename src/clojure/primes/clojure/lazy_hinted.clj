@@ -1,6 +1,7 @@
 (ns primes.clojure.lazy-hinted
   "Generates primes using an infinite, lazy sieve.  This version uses primitive
-  hints to make the numeric operations faster.")
+  hints to make the numeric operations faster."
+  (:require [primes.util :as util]))
 
 (defn divides?
   "Returns true if n is divisible by d."
@@ -21,6 +22,7 @@
     n))
 
 (def prime-seq
+  "A lazy sequence of prime numbers."
   ((fn next [^long p primes]
      (lazy-seq
        (cons p
@@ -28,12 +30,7 @@
            (conj primes p)))))
     2 []))
 
-(deftype LazySeqPrimes [prime-set]
-  primes.Primes
-  (isPrime [this n]
-    (contains? prime-set n)))
-
 (defn get-primes
-  "Returns a list of all the prime numbers less than n"
-  [^long n]
-  (LazySeqPrimes. (apply hash-set (take-while #(< % n) prime-seq))))
+  "Gets all of the primes less than n."
+  [n]
+  (util/get-primes prime-seq n))
