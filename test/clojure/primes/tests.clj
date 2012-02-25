@@ -1,29 +1,13 @@
 (ns primes.tests
-  (:require [primes.java.bitset :as bitset]
-            [primes.java.lazy :as java-lazy]
-            [primes.clojure.array-seq :as clj-array]
-            [primes.clojure.lazy-seq.type :as clj-lazy]
-            [primes.clojure.hinted-seq :as clj-hinted]
-            [primes.clojure.exploit-types :as clj-exploit-types]
-            )
+  (:require [primes.java [lazy-basic :as java-basic]]
+            [primes.clojure [lazy-basic :as clj-basic]])
   (:use clojure.test))
 
 (declare thousand-primes)
 
-(defmacro defprimetest [name prime-fn]
-  `(deftest ~name
-    (let [^primes.Primes prime-tester# (~prime-fn 8000)
-          is-prime?#    #(.isPrime prime-tester# %)
-          prime-seq#    (filter is-prime?# (range))]
-      (is (= (take 1000 prime-seq#) thousand-primes)))))
-
-(defprimetest java-bitset  bitset/get-primes)
-(defprimetest java-lazy  java-lazy/get-primes)
-(defprimetest clojure-lazy clj-lazy/get-primes)
-(defprimetest clojure-hinted clj-hinted/get-primes)
-(defprimetest clojure-exploit-types clj-exploit-types/get-primes)
-(defprimetest clojure-array clj-array/get-primes)
-
+(deftest primes
+  (is (= thousand-primes (take 1000 java-basic/prime-seq)))
+  (is (= thousand-primes (take 1000 clj-basic/prime-seq))))
 
 (def thousand-primes
     [   2      3      5      7     11     13     17     19     23     29 

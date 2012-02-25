@@ -5,12 +5,8 @@
 (def default-n 100000)
 
 (def algorithms
-  {:java-bitset           'primes.java.bitset
-   :java-lazy             'primes.java.lazy
-   :clojure-array         'primes.clojure.array-seq
-   :clojure-lazy          'primes.clojure.lazy-seq
-   :clojure-hinted        'primes.clojure.hinted-seq
-   :clojure-exploit-types 'primes.clojure.exploit-types})
+  {:java-lazy-basic       'primes.java.lazy-basic
+   :clojure-lazy-basic    'primes.clojure.lazy-basic})
 
 (defn handle-bad-args
   "Handles the case of bad arguments."
@@ -58,9 +54,9 @@
                     time)))]
     (drop warmup-cycles times)))
 
-(defn benchmark-all [warmup-cycles samples n algorithms]
+(defn benchmark-all [warmup-cycles samples max algorithms]
   (zipmap algorithms
-          (map #(benchmark warmup-cycles samples n %) algorithms)))
+          (map #(benchmark warmup-cycles samples max %) algorithms)))
 
 (defn to-num [n default-value]
   (cond

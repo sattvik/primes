@@ -1,18 +1,15 @@
-package primes.java.lazy;
+package primes.java;
 
 import java.util.*;
 import primes.Primes;
-public class LazyPrimeGenerator {
+
+public class BasicLazyPrimeFinder {
     static boolean divides(long n, long d) {
         return 0 == (n % d);
     }
 
     static boolean hasPrimeFactor(long n, List<Long> primes) {
-        double limit = Math.sqrt(n);
         for (long p : primes) {
-	    if (p > limit) {
-	        return false;
-	    }
             if (divides(n, p)) {
                 return true;
             }
@@ -28,7 +25,7 @@ public class LazyPrimeGenerator {
         }
     }
 
-    static Iterator<Long> primeIterator() {
+    public static Iterator<Long> primeIterator() {
         return new Iterator<Long>() {
             private long thePrime = 2;
             private List<Long> knownPrimes = new ArrayList<Long>();
@@ -50,20 +47,6 @@ public class LazyPrimeGenerator {
             public void remove() {
                 throw new UnsupportedOperationException("Ye canna' change " +
                         "the laws of mathematics!");
-            }
-        };
-    }
-
-    public static Primes getPrimes(long n) {
-        final Set<Long> primes = new HashSet<Long>();
-        Iterator<Long> primeSeq = primeIterator();
-        for (Long prime = primeSeq.next(); prime < n; prime = primeSeq.next()) {
-            primes.add(prime);
-        }
-        return new Primes() {
-            @Override
-            public boolean isPrime(long n) {
-                return primes.contains(n);
             }
         };
     }
