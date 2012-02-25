@@ -21,17 +21,18 @@
   or equal to n that is relatively prime to all of the numbers in known-primes."
   [n known-primes]
   (if (has-prime-factor? n known-primes)
-    (recur (inc n) known-primes)
+    (recur (+ n 2) known-primes)
     n))
 
 (def prime-seq
   "A lazy sequence of prime numbers."
-  ((fn inner [p primes]
-     (lazy-seq
-       (cons p
-             (inner (next-prime (inc p) primes)
-                    (conj primes p)))))
-     2 []))
+  (cons 2
+        ((fn inner [p primes]
+           (lazy-seq
+             (cons p
+                   (inner (next-prime (+ p 2) primes)
+                          (conj primes p)))))
+           3 [])))
 
 (defn get-primes
   "Gets all of the primes less than n."

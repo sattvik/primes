@@ -22,7 +22,7 @@ public class SmarterLazyPrimeFinder {
     }
 
     static long nextPrime(long n, List<Long> primes) {
-        for (;;++n) {
+        for (;;n += 2) {
             if (!hasPrimeFactor(n, primes)) {
                 return n;
             }
@@ -42,8 +42,12 @@ public class SmarterLazyPrimeFinder {
             @Override
             public Long next() {
                 long returnMe = thePrime;
-                knownPrimes.add(thePrime);
-                thePrime = nextPrime(++thePrime, knownPrimes);
+                if (thePrime == 2) {
+                    ++thePrime;
+                } else {
+                    knownPrimes.add(thePrime);
+                    thePrime = nextPrime(thePrime+=2, knownPrimes);
+                }
                 return returnMe;
             }
 

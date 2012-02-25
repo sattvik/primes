@@ -30,7 +30,7 @@
   or equal to n that is relatively prime to all of the numbers in known-primes."
   [^long n ^longs known-primes]
   (if (has-prime-factor? n known-primes)
-    (recur (inc n) known-primes)
+    (recur (+ 2 n) known-primes)
     n))
 
 (defn- add-prime
@@ -52,14 +52,15 @@
 
 (def prime-seq
   "A lazy sequence of prime numbers."
-  ((fn inner [^long p ^longs primes]
-     (lazy-seq
-       (cons p
-             (inner (next-prime (inc p) primes)
-                    (add-prime primes p)))))
-     2 (let [arr (long-array 32)]
-         (aset arr 0 1)
-         arr)))
+  (cons 2
+        ((fn inner [^long p ^longs primes]
+           (lazy-seq
+             (cons p
+                   (inner (next-prime (+ 2 p) primes)
+                          (add-prime primes p)))))
+           3 (let [arr (long-array 32)]
+               (aset arr 0 1)
+               arr))))
 
 (defn get-primes
   "Gets all of the primes less than n."
