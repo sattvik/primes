@@ -1,6 +1,6 @@
 (ns primes.clojure.lazy-hinted
-  "Generates primes using an infinite, lazy sieve.  This version uses primitive
-  hints to make the numeric operations faster."
+  "Generates primes using an infinite, lazy sieve.  This version improves upon
+  the lazy-basic implementation by using primitive hints."
   (:require [primes.util :as util]))
 
 (defn divides?
