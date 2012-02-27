@@ -15,7 +15,7 @@
   "Returns true if n has a factor in primes."
   [^long n ^longs primes]
   (let [c     (aget primes 0)
-        sqrtn (long (Math/sqrt n))]
+        sqrtn (long (Math/sqrt (double n)))]
     (loop [i 1]
       (if (= i c)
         false
