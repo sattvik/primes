@@ -25,13 +25,14 @@
             (divides? n p) true
             :else          (recur (inc i))))))))
 
-(defn next-prime
+(definline next-prime
   "Given n and a list of prime factors, return the smallest number greater than
   or equal to n that is relatively prime to all of the numbers in known-primes."
-  [^long n ^longs known-primes]
-  (if (has-prime-factor? n known-primes)
-    (recur (+ 2 n) known-primes)
-    n))
+  [n known-primes]
+  `(loop [n# ~n]
+     (if (has-prime-factor? n# ~known-primes)
+       (recur (+ 2 n#))
+       n#)))
 
 (defn- add-prime
   "Adds a prime to the array of primes, doubling the size of the vector, if
