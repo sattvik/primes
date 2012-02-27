@@ -44,25 +44,28 @@
 (defn reload-algo-function
   "Returns the function that implements the given algorithm,
   forcing recompilation of the code."
-  [algo-key]
+  [algo-key fn-sym]
   (let [ns-sym (algorithms algo-key)]
     (require :reload ns-sym)
-    (ns-resolve ns-sym 'get-primes)))
+    (ns-resolve ns-sym fn-sym)))
 
 (defn benchmark [warmup-cycles samples max algorithm]
   (print (name algorithm))
   (flush)
-  (let [runs  (+ warmup-cycles samples)
-        times (doall
-                (for [i (range runs)]
-                  (let [algo-fn (reload-algo-function algorithm)
-                        time    (time-invoke #(algo-fn max))]
-	            (cond
-		      (< i warmup-cycles) (print \,)
-		      (= i (dec runs)) (println "done!")
-		      :else      (print \.))
-                    (flush)
-                    time)))]
+  (let [runs    (+ warmup-cycles samples)
+        result  ((reload-algo-function algorithm 'get-primes) max)
+        fn-sym  (if (vector? result) 'realise 'get-primes)
+        cnt     (if (vector? result) (count result) max)
+        times   (doall
+                  (for [i (range runs)]
+                    (let [algo-fn (reload-algo-function algorithm fn-sym)
+                          time    (time-invoke #(algo-fn cnt))]
+                      (cond
+                        (< i warmup-cycles) (print \,)
+                        (= i (dec runs)) (println "done!")
+                        :else      (print \.))
+                      (flush)
+                      time)))]
     (drop warmup-cycles times)))
 
 (defn benchmark-all [warmup-cycles samples max algorithms]

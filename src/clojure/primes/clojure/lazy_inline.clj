@@ -68,4 +68,9 @@
   [n]
   (util/get-primes prime-seq n))
 
+(defn realise
+  "Realise the first n items in prime-seq."
+  [^long n]
+  (util/realise prime-seq n))
+
 (set! *unchecked-math* false)

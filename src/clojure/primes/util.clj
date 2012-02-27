@@ -4,14 +4,21 @@
 (defn get-primes
   "Given a lazy sequence of primes, return a collection of all the primes up to
   n."
-  [^clojure.lang.ISeq prime-seq
-   ^long n]
+  [prime-seq n]
   (loop [primes prime-seq
-         out    ^clojure.lang.ITransientCollection (transient [])]
-    (let [p (.longValue ^Long (.first primes))]
+         out    (transient [])]
+    (let [p (first primes)]
       (if (< p n)
-        (recur (.next primes) (.conj out (Long. p)))
+        (recur (next primes) (conj! out p))
         (persistent! out)))))
+
+(definline realise
+  "Given a lazy sequence, realise the first n items."
+  [seq n]
+  `(loop [^clojure.lang.ISeq seq# ~seq
+          i# (long ~n)]
+     (when-not (zero? i#)
+       (recur (.next seq#) (dec i#)))))
 
 (defn bitset->vector
   "Extracts all of the primes from a BitSet."
