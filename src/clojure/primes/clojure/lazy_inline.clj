@@ -11,19 +11,18 @@
   [n d]
   `(zero? (rem ~n ~d)))
 
-(defn has-prime-factor?
+(definline has-prime-factor?
   "Returns true if n has a factor in primes."
-  [^long n ^longs primes]
-  (let [c     (aget primes 0)
-        sqrtn (long (Math/sqrt (double n)))]
-    (loop [i 1]
-      (if (= i c)
-        false
-        (let [p (aget primes i)]
-          (cond
-            (> p sqrtn)    false
-            (divides? n p) true
-            :else          (recur (inc i))))))))
+  [n ^longs primes]
+  `(let [c#     (aget ~primes 0)
+         sqrtn# (long (Math/sqrt (double ~n)))]
+     (loop [i# 1]
+       (when-not (= i# c#)
+         (let [p# (aget ~primes i#)]
+           (cond
+             (> p# sqrtn#)    false
+             (divides? ~n p#) true
+             :else            (recur (inc i#))))))))
 
 (definline next-prime
   "Given n and a list of prime factors, return the smallest number greater than
