@@ -14,6 +14,7 @@
    :clojure-lazy-exploitive      'primes.clojure.lazy-exploitive
    :clojure-lazy-array           'primes.clojure.lazy-array
    :clojure-lazy-array-unchecked 'primes.clojure.lazy-array-unchecked
+   :clojure-lazy-inline          'primes.clojure.lazy-inline
    :java-eager-bitset            'primes.java.eager-bitset
    :clojure-eager-bitset         'primes.clojure.eager-bitset
    :clojure-eager-array          'primes.clojure.eager-array})

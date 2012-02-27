@@ -9,6 +9,7 @@
                             [lazy-exploitive      :as clj-exploitive]
                             [lazy-array           :as clj-lazy-array]
                             [lazy-array-unchecked :as clj-unchecked]
+                            [lazy-inline          :as clj-inline]
                             [eager-bitset         :as clj-bitset]
                             [eager-array          :as clj-eager-array]])
   (:use clojure.test
@@ -26,6 +27,7 @@
   (is (= thousand-primes (take 1000 clj-exploitive/prime-seq)))
   (is (= thousand-primes (take 1000 clj-lazy-array/prime-seq)))
   (is (= thousand-primes (take 1000 clj-unchecked/prime-seq)))
+  (is (= thousand-primes (take 1000 clj-inline/prime-seq)))
   (is (= thousand-primes (take 1000 (bitset->vector (java-bitset/get-primes 7920)))))
   (is (= thousand-primes (take 1000 (bitset->vector (clj-bitset/get-primes 7920)))))
   (is (= thousand-primes (take 1000 (bitset->vector
