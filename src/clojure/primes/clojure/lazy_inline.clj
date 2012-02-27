@@ -27,7 +27,7 @@
 (definline next-prime
   "Given n and a list of prime factors, return the smallest number greater than
   or equal to n that is relatively prime to all of the numbers in known-primes."
-  [n known-primes]
+  [n ^longs known-primes]
   `(loop [n# ~n]
      (if (has-prime-factor? n# ~known-primes)
        (recur (+ 2 n#))
