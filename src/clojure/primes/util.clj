@@ -7,9 +7,10 @@
   [prime-seq n]
   (loop [primes prime-seq
          out    (transient [])]
-    (if (< (first primes) n) 
-      (recur (next primes) (conj! out n))
-      (persistent! out))))
+    (let [p (first primes)]
+      (if (< p n)
+        (recur (next primes) (conj! out p))
+        (persistent! out)))))
 
 (defn bitset->vector
   "Extracts all of the primes from a BitSet."
