@@ -15,8 +15,7 @@
   (let [c     (aget primes 0)
         sqrtn (long (Math/sqrt n))]
     (loop [i 1]
-      (if (= i c)
-        false
+      (when-not (= i c)
         (let [p (aget primes i)]
           (cond
             (> p sqrtn)    false
