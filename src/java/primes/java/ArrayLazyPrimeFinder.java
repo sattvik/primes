@@ -41,7 +41,7 @@ public class ArrayLazyPrimeFinder {
             }
 
             @Override
-            public synchronized Long next() {
+            public Long next() {
                 long returnMe = thePrime;
                 if (thePrime == 2) {
                     ++thePrime;

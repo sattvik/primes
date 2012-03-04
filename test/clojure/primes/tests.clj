@@ -1,8 +1,9 @@
 (ns primes.tests
-  (:require [primes.java [lazy-basic   :as java-basic]
-                         [lazy-smarter :as java-smarter]
-                         [lazy-array   :as java-array]
-                         [eager-bitset :as java-bitset]]
+  (:require [primes.java [lazy-basic        :as java-basic]
+                         [lazy-smarter      :as java-smarter]
+                         [lazy-array        :as java-array]
+                         [lazy-array-cached :as java-array-cached]
+                         [eager-bitset      :as java-bitset]]
             [primes.clojure [lazy-basic           :as clj-basic]
                             [lazy-hinted          :as clj-hinted]
                             [lazy-smarter         :as clj-smarter]
@@ -30,6 +31,7 @@
   (is (= thousand-primes (take 1000 clj-unchecked/prime-seq)))
   (is (= thousand-primes (take 1000 clj-inline/prime-seq)))
   (is (= thousand-primes (take 1000 java-array/prime-seq)))
+  (is (= thousand-primes (take 1000 java-array-cached/prime-seq)))
   (is (= thousand-primes (take 1000 (bitset->vector (java-bitset/get-primes 7920)))))
   (is (= thousand-primes (take 1000 (bitset->vector (clj-bitset/get-primes 7920)))))
   (is (= thousand-primes (take 1000 (bitset->vector
