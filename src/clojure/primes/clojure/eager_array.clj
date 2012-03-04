@@ -5,17 +5,20 @@
 
 (set! *unchecked-math* true)
 
+(def ^:const even-mask 0x5555555555555555)
+
 (defn get-primes
   "Returns a list of all the prime numbers less than n"
   [^long n]
-  (let [imax (long (Math/ceil (Math/sqrt (double n))))
-        numlongs (inc (quot n 64))
-        ^longs bitset (long-array numlongs 0x5555555555555555)]
-    (aset bitset 0 0x5555555555555553)
+  (let [sqrtn         (long (Math/sqrt (double n)))
+        numlongs      (quot (+ n 63) 64)
+        ^longs bitset (long-array numlongs even-mask)
+        n             (* numlongs 64)]
+    (aset bitset 0 (bit-xor even-mask 0x06))
     (loop [i 3
            j 9]
       (cond
-        (>= i imax) :done
+        (>= i sqrtn) :done
         (zero? j)
           (let [array-off (quot i 64)
                 long-off  (rem i 64)]
